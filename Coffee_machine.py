@@ -31,95 +31,123 @@ resources = {
     "money": 0
 }
 
-userinput = input("What would you like? (espresso/latte/cappuccino) ").lower()
+userinput = ""
 
-if userinput == "report":
-    for i in resources:
-        print (i, resources[i])
+while userinput != "off":
+   
 
-elif userinput == "espresso":
+    userinput = input("What would you like? (espresso/latte/cappuccino) ").lower()
+    if resources['water'] < 50:
+        print("There is not enough water to make anything. Please turn off and refill water")
+        continue
+    if userinput != "espresso" and resources['milk'] < 100:
+        print("There is not enough milk to make a latte or a cappuccino, if you would like one, please turn off and refill milk")
+        continue
+    if resources['coffee'] < 18:
+        print("There is not enough coffee to make anything. Please turn off and refill coffee")
+        continue
+    if userinput == "report":
+        for i in resources:
+            print (i, resources[i])
 
-    if MENU['espresso']['ingredients']['water'] > resources['water']:
-        print("Sorry, but there is not enough water to make this.")
-    elif MENU['espresso']['ingredients']['coffee'] > resources['coffee']:
-        print("Sorry, but there is not enough coffee to make this.")
-    elif MENU['espresso']['ingredients']['water'] < resources['water'] and MENU['espresso']['ingredients']['coffee'] < resources['coffee']:
-        print(f"Espresso cost is ${MENU['espresso']['cost']}, please insert coins to pay | quarters, dimes, nickels, pennies. ")
-        q = int(input("How many quarters? ")) * .25
-        d = int(input("How many dimes? ")) * .1
-        n = int(input("How many nickels? ")) * .05
-        p = int(input("How many pennies? ")) * .01
-        total_coins = q + d + n + p 
-        if MENU['espresso']['cost'] > total_coins:
-            print("Sorry, this is not enough money. Your money has been refunded")
-        else:
-            change = total_coins - MENU['espresso']['cost']
-            resources['money'] = resources['money'] + MENU['espresso']['cost']
-            print(f"Thank you for your purchase! your change is ${round(change, 2)}.")
-        resources['water'] = resources['water'] - MENU['espresso']['ingredients']['water']
-        resources['coffee'] = resources['coffee'] - MENU['espresso']['ingredients']['coffee']
-        print(f"Your {userinput} is dispensing now!")
-        print(f"Remaining resources: {resources}.")
+    elif userinput == "espresso":
 
-elif userinput == "latte":
+        if MENU['espresso']['ingredients']['water'] > resources['water']:
+            print("Sorry, but there is not enough water to make this.")
+            continue
+        elif MENU['espresso']['ingredients']['coffee'] > resources['coffee']:
+            print("Sorry, but there is not enough coffee to make this.")
+            continue
+        elif MENU['espresso']['ingredients']['water'] < resources['water'] and MENU['espresso']['ingredients']['coffee'] < resources['coffee']:
+            print(f"Espresso cost is ${MENU['espresso']['cost']}, please insert coins to pay | quarters, dimes, nickels, pennies. ")
+            q = int(input("How many quarters? ")) * .25
+            d = int(input("How many dimes? ")) * .1
+            n = int(input("How many nickels? ")) * .05
+            p = int(input("How many pennies? ")) * .01
+            total_coins = q + d + n + p 
+            if MENU['espresso']['cost'] > total_coins:
+                print("Sorry, this is not enough money. Your money has been refunded")
+                continue
+            else:
+                change = total_coins - MENU['espresso']['cost']
+                resources['money'] = resources['money'] + MENU['espresso']['cost']
+                print(f"Thank you for your purchase! your change is ${round(change, 2)}.")
+                resources['water'] = resources['water'] - MENU['espresso']['ingredients']['water']
+                resources['coffee'] = resources['coffee'] - MENU['espresso']['ingredients']['coffee']
+                print(f"Your {userinput} is dispensing now!")
+                print(f"Remaining resources: {resources}.")
+                userinput != "off"
+                continue
 
-    if MENU['latte']['ingredients']['water'] > resources['water']:
-        print("Sorry, but there is not enough water to make this.")
-    elif MENU['latte']['ingredients']['coffee'] > resources['coffee']:
-        print("Sorry, but there is not enough coffee to make this.")
-    elif MENU['latte']['ingredients']['milk'] > resources['milk']:
-        print("Sorry, but there is not enough milk to make this.")
-    elif MENU['latte']['ingredients']['water'] < resources['water'] and MENU['latte']['ingredients']['coffee'] < resources['coffee'] and MENU['latte']['ingredients']['milk'] < resources['milk']:
-        print(f"Latte cost is ${MENU['latte']['cost']}, please insert coins to pay | quarters, dimes, nickels, pennies. ")
-        q = int(input("How many quarters? ")) * .25
-        d = int(input("How many dimes? ")) * .1
-        n = int(input("How many nickels? ")) * .05
-        p = int(input("How many pennies? ")) * .01
-        total_coins = q + d + n + p 
-        if MENU['latte']['cost'] > total_coins:
-            print("Sorry, this is not enough money. Your money has been refunded")
-       
-        elif MENU['latte']['cost'] < total_coins:
-            change = total_coins - MENU['latte']['cost']
-            resources['money'] = resources['money'] + MENU['latte']['cost']
-            print(f"Thank you for your purchase! your change is ${round(change, 2)}.")
-            resources['water'] = resources['water'] - MENU['latte']['ingredients']['water']
-            resources['coffee'] = resources['coffee'] - MENU['latte']['ingredients']['coffee']
-            resources['milk'] = resources['milk'] - MENU['latte']['ingredients']['milk']
-            print(f"Your {userinput} is dispensing now!")
-            print(f"Remaining resources: {resources}.")
+    elif userinput == "latte":
 
-elif userinput == "cappuccino":
+        if MENU['latte']['ingredients']['water'] > resources['water']:
+            print("Sorry, but there is not enough water to make this.")
+            continue
+        elif MENU['latte']['ingredients']['coffee'] > resources['coffee']:
+            print("Sorry, but there is not enough coffee to make this.")
+            continue
+        elif MENU['latte']['ingredients']['milk'] > resources['milk']:
+            print("Sorry, but there is not enough milk to make this.")
+            continue
+        elif MENU['latte']['ingredients']['water'] < resources['water'] and MENU['latte']['ingredients']['coffee'] < resources['coffee'] and MENU['latte']['ingredients']['milk'] < resources['milk']:
+            print(f"Latte cost is ${MENU['latte']['cost']}, please insert coins to pay | quarters, dimes, nickels, pennies. ")
+            q = int(input("How many quarters? ")) * .25
+            d = int(input("How many dimes? ")) * .1
+            n = int(input("How many nickels? ")) * .05
+            p = int(input("How many pennies? ")) * .01
+            total_coins = q + d + n + p 
+            if MENU['latte']['cost'] > total_coins:
+                print("Sorry, this is not enough money. Your money has been refunded")
+                continue
+            elif MENU['latte']['cost'] < total_coins:
+                change = total_coins - MENU['latte']['cost']
+                resources['money'] = resources['money'] + MENU['latte']['cost']
+                print(f"Thank you for your purchase! your change is ${round(change, 2)}.")
+                resources['water'] = resources['water'] - MENU['latte']['ingredients']['water']
+                resources['coffee'] = resources['coffee'] - MENU['latte']['ingredients']['coffee']
+                resources['milk'] = resources['milk'] - MENU['latte']['ingredients']['milk']
+                print(f"Your {userinput} is dispensing now!")
+                print(f"Remaining resources: {resources}.")
+                userinput != "off"
+                continue
 
-    if MENU['cappuccino']['ingredients']['water'] > resources['water']:
-        print("Sorry, but there is not enough water to make this.")
-    elif MENU['cappuccino']['ingredients']['coffee'] > resources['coffee']:
-        print("Sorry, but there is not enough coffee to make this.")
-    elif MENU['cappuccino']['ingredients']['milk'] > resources['milk']:
-        print("Sorry, but there is not enough milk to make this.")
-    elif MENU['cappuccino']['ingredients']['water'] < resources['water'] and MENU['cappuccino']['ingredients']['coffee'] < resources['coffee'] and MENU['cappuccino']['ingredients']['milk'] < resources['milk']:
-        print(f"cappuccino cost is ${MENU['cappuccino']['cost']}, please insert coins to pay | quarters, dimes, nickels, pennies. ")
-        q = int(input("How many quarters? ")) * .25
-        d = int(input("How many dimes? ")) * .1
-        n = int(input("How many nickels? ")) * .05
-        p = int(input("How many pennies? ")) * .01
-        total_coins = q + d + n + p 
-        if MENU['cappuccino']['cost'] > total_coins:
-            print("Sorry, this is not enough money. Your money has been refunded")
-       
-        elif MENU['cappuccino']['cost'] < total_coins:
-            change = total_coins - MENU['cappuccino']['cost']
-            resources['money'] = resources['money'] + MENU['cappuccino']['cost']
-            print(f"Thank you for your purchase! your change is ${round(change, 2)}.")
-            resources['water'] = resources['water'] - MENU['cappuccino']['ingredients']['water']
-            resources['coffee'] = resources['coffee'] - MENU['cappuccino']['ingredients']['coffee']
-            resources['milk'] = resources['milk'] - MENU['cappuccino']['ingredients']['milk']
-            print(f"Your {userinput} is dispensing now!")
-            print(f"Remaining resources: {resources}.")
+    elif userinput == "cappuccino":
 
-elif userinput == "off":
-    print("Thank you, goodbye.")
+        if MENU['cappuccino']['ingredients']['water'] > resources['water']:
+            print("Sorry, but there is not enough water to make this.")
+            continue
+        elif MENU['cappuccino']['ingredients']['coffee'] > resources['coffee']:
+            print("Sorry, but there is not enough coffee to make this.")
+            continue
+        elif MENU['cappuccino']['ingredients']['milk'] > resources['milk']:
+            print("Sorry, but there is not enough milk to make this.")
+            continue
+        elif MENU['cappuccino']['ingredients']['water'] < resources['water'] and MENU['cappuccino']['ingredients']['coffee'] < resources['coffee'] and MENU['cappuccino']['ingredients']['milk'] < resources['milk']:
+            print(f"cappuccino cost is ${MENU['cappuccino']['cost']}, please insert coins to pay | quarters, dimes, nickels, pennies. ")
+            q = int(input("How many quarters? ")) * .25
+            d = int(input("How many dimes? ")) * .1
+            n = int(input("How many nickels? ")) * .05
+            p = int(input("How many pennies? ")) * .01
+            total_coins = q + d + n + p 
+            if MENU['cappuccino']['cost'] > total_coins:
+                print("Sorry, this is not enough money. Your money has been refunded")
+                continue
         
-        
+            elif MENU['cappuccino']['cost'] < total_coins:
+                change = total_coins - MENU['cappuccino']['cost']
+                resources['money'] = resources['money'] + MENU['cappuccino']['cost']
+                print(f"Thank you for your purchase! your change is ${round(change, 2)}.")
+                resources['water'] = resources['water'] - MENU['cappuccino']['ingredients']['water']
+                resources['coffee'] = resources['coffee'] - MENU['cappuccino']['ingredients']['coffee']
+                resources['milk'] = resources['milk'] - MENU['cappuccino']['ingredients']['milk']
+                print(f"Your {userinput} is dispensing now!")
+                print(f"Remaining resources: {resources}.")
+                continue
+
+    elif userinput == "off":
+        userinput = "off"
+
+print("Thank you, goodbye.")       
 
     
